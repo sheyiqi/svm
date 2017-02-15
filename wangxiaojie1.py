@@ -13,9 +13,9 @@ x_train = X[:63,:]
 x_test = X[63:,:]
 y_train = y[:63]
 y_test = y[63:]
-for a in range(-5,5,1):
+for a in range(-3,3,1):
     c = 10**a
-    for b in range(-5,5,1):
+    for b in range(-3,3,1):
         g = 10**b
         clf = SVC(C=c,gamma=g)
         clf.fit(x_train, y_train)

@@ -8,17 +8,22 @@ def my_kernel(X1, Y1):
     """
     We create a custom kernel:
 
-                 (2  0)
-    k(X, Y) = X  (    ) Y.T
-                 (0  1)
+                 (5 0 0 0 0 0 0 0)
+                 (0 2 0 0 0 0 0 0)
+                 (0 0 2 0 0 0 0 0)
+                 (0 0 0 1 0 0 0 0)
+    k(X, Y) = X  (0 0 0 0 1 0 0 0) Y.T
+                 (0 0 0 0 0 2 0 0)
+                 (0 0 0 0 0 0 2 0)
+                 (0 0 0 0 0 0 0 2)
     """
-    return np.dot(np.dot(X1,[[5,0,0,0,0,0,0,0],[0,2,0,0,0,0,0,0],[0,0,2,0,0,0,0,0],[0,0,0,1,0,0,0,0],[0,0,0,0,1,0,0,0],[0,0,0,0,0,2,0,0],[0,0,0,0,0,0,2,0],[0,0,0,0,0,0,0,2]]), Y1.T)
+    return np.dot(np.dot(X1,[[6,0,0,0,0,0,0,0],[0,4,0,0,0,0,0,0],[0,0,2,0,0,0,0,0],[0,0,0,1,0,0,0,0],[0,0,0,0,2,0,0,0],[0,0,0,0,0,51,0,0],[0,0,0,0,0,0,18,0],[0,0,0,0,0,0,0,10]]), Y1.T)
 
 num = -1
 data1 = np.loadtxt("d1", dtype = np.float)
 X1 = data1[:,:num]
 y1 = data1[:,num:]
-kfold1 = KFold(9, n_folds=9,shuffle=True)
+kfold1 = KFold(9, n_folds=5,shuffle=True)
 data2 = np.loadtxt("d2", dtype = np.float)
 X2 = data2[:,:num]
 y2 = data2[:,num:]
@@ -45,12 +50,11 @@ X9 = data9[:,:num]
 y9 = data9[:,num:]
 
 
-#for kernel1 in ("my_kernel","linear","poly","rbf","sigmoid"):
-score1 =0
-score2 =0
-score3 =0
+#score1 =0
+#score2 =0
+#score3 =0
 score4 =0
-score5 =0
+#score5 =0
 
 for train, test in kfold1:
     print("TRAIN:", train, "TEST:", test)
@@ -80,31 +84,32 @@ for train, test in kfold1:
     #print (y_train.shape)
     #print (X_test.shape)
     #print (y_test.shape)
-    clf1 = SVC(kernel = my_kernel)
-    clf2 = SVC(kernel = 'linear')
-    clf3 = SVC(kernel = 'poly')
+    #clf1 = SVC(kernel = my_kernel)
+    #clf2 = SVC(kernel = 'linear')
+    #clf3 = SVC(kernel = 'poly')
     clf4 = SVC()
-    clf5 = SVC(kernel = 'sigmoid')
-    clf1.fit(X_train,y_train)
-    clf2.fit(X_train,y_train)
-    clf3.fit(X_train,y_train)
+    #clf5 = SVC(kernel = 'sigmoid')
+    #clf1.fit(X_train,y_train)
+    #clf2.fit(X_train,y_train)
+    #clf3.fit(X_train,y_train)
     clf4.fit(X_train,y_train)
-    clf5.fit(X_train,y_train)
-    score1 += clf1.score(X_test,y_test)/9
-    score2 += clf2.score(X_test,y_test)/9
-    score3 += clf3.score(X_test,y_test)/9
+    #clf5.fit(X_train,y_train)
+    #score1 += clf1.score(X_test,y_test)/9
+    #score2 += clf2.score(X_test,y_test)/9
+    #score3 += clf3.score(X_test,y_test)/9
+    print (clf4.score(X_test,y_test))
     score4 += clf4.score(X_test,y_test)/9
-    score5 += clf5.score(X_test,y_test)/9
-print ("my_kernel")
-print (score1)
-print ("linear")
-print (score2)
-print ("poly")
-print (score3)
-print ("rbf")
-print (score4)
-print ("sigmoid")
-print (score5)
+    #score5 += clf5.score(X_test,y_test)/9
+#print ("my_kernel")
+#print (score1)
+#print ("linear")
+#print (score2)
+#print ("poly")
+#print (score3)
+#print ("rbf")
+#print (score4)
+#print ("sigmoid")
+#print (score5)
 
     #os.system("rm result")
     #os.system("touch result")
