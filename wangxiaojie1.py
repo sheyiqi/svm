@@ -1,4 +1,4 @@
-#!/home/yiqi.she/venv/common/bin/python3
+#! /home/yiqi.she/venv/common/bin/python3
 
 import sys, os
 import numpy as np

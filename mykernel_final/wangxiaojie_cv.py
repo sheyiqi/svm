@@ -8,14 +8,14 @@ def my_kernel(X1, Y1):
     """
     We create a custom kernel:
 
-                 (5 0 0 0 0 0 0 0)
-                 (0 2 0 0 0 0 0 0)
-                 (0 0 2 0 0 0 0 0)
-                 (0 0 0 1 0 0 0 0)
-    k(X, Y) = X  (0 0 0 0 1 0 0 0) Y.T
-                 (0 0 0 0 0 2 0 0)
-                 (0 0 0 0 0 0 2 0)
-                 (0 0 0 0 0 0 0 2)
+                 (6  0  0  0  0  0  0  0 )
+                 (0  4  0  0  0  0  0  0 )
+                 (0  0  2  0  0  0  0  0 )
+                 (0  0  0  1  0  0  0  0 )
+    k(X, Y) = X  (0  0  0  0  2  0  0  0 ) Y.T
+                 (0  0  0  0  0  51 0  0 )
+                 (0  0  0  0  0  0  18 0 )
+                 (0  0  0  0  0  0  0  10)
     """
     return np.dot(np.dot(X1,[[6,0,0,0,0,0,0,0],[0,4,0,0,0,0,0,0],[0,0,2,0,0,0,0,0],[0,0,0,1,0,0,0,0],[0,0,0,0,2,0,0,0],[0,0,0,0,0,51,0,0],[0,0,0,0,0,0,18,0],[0,0,0,0,0,0,0,10]]), Y1.T)
 
@@ -50,7 +50,11 @@ X9 = data9[:,:num]
 y9 = data9[:,num:]
 
 os.system("rm result")
-
+array1= np.zeros((9,9))
+array2= np.zeros((9,9))
+array3= np.zeros((9,9))
+array4= np.zeros((9,9))
+array5= np.zeros((9,9))
 
 for a in range(-3,3,1):
     c = 10**a
@@ -108,6 +112,27 @@ for a in range(-3,3,1):
             score3 += clf3.score(X_test,y_test)/9
             score4 += clf4.score(X_test,y_test)/9
             score5 += clf5.score(X_test,y_test)/9
+            fitdata1 =  clf1.predict(X_test)
+            fitdata2 =  clf2.predict(X_test)
+            fitdata3 =  clf3.predict(X_test)
+            fitdata4 =  clf4.predict(X_test)
+            fitdata5 =  clf5.predict(X_test)
+            for i in range(len(fitdata1)):
+                array1[int(y_test[i][0])-1][int(fitdata1[i])-1]+=1
+            for i in range(len(fitdata2)):
+                array2[int(y_test[i][0])-1][int(fitdata2[i])-1]+=1
+            for i in range(len(fitdata3)):
+                array3[int(y_test[i][0])-1][int(fitdata3[i])-1]+=1
+            for i in range(len(fitdata4)):
+                array4[int(y_test[i][0])-1][int(fitdata4[i])-1]+=1
+            for i in range(len(fitdata5)):
+                array5[int(y_test[i][0])-1][int(fitdata5[i])-1]+=1
+print (array1)
+print (array2)
+print (array3)
+print (array4)
+print (array5)
+
         #print ("my_kernel")
         #print (score1)
         #print ("linear")
@@ -119,16 +144,16 @@ for a in range(-3,3,1):
         #print ("sigmoid")
         #print (score5)
         
-        os.system("touch result")
-        f = open('result','a+')
-        f.write("c="+str(c)+'\n')
-        f.write("g="+str(g)+'\n')
-        f.write("my_kernel"+'\t'+str(score1)+'\n')
-        f.write("linear"+'\t'+'\t'+str(score2)+'\n')
-        f.write("poly"+'\t'+'\t'+str(score3)+'\n')
-        f.write("rbf"+'\t'+'\t'+str(score4)+'\n')
-        f.write("sigmoid"+'\t'+'\t'+str(score5)+'\n')
-        f.write("--------------------------------------------------"+'\n')
-        f.close()
+#os.system("touch result")
+#f = open('result','a+')
+#f.write("c="+str(c)+'\n')
+#f.write("g="+str(g)+'\n')
+#f.write("my_kernel"+'\t'+str(score1)+'\n')
+#f.write("linear"+'\t'+'\t'+str(score2)+'\n')
+#f.write("poly"+'\t'+'\t'+str(score3)+'\n')
+#f.write("rbf"+'\t'+'\t'+str(score4)+'\n')
+#f.write("sigmoid"+'\t'+'\t'+str(score5)+'\n')
+#f.write("--------------------------------------------------"+'\n')
+#f.close()
 
-os.system("cat result")
+#os.system("cat result")
